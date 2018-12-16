@@ -1,0 +1,138 @@
+﻿@model GandivaTestProject.Models.TaskViewModel
+@{
+    ViewData["Title"] = "Editing Task";
+}
+
+@section scripts
+    {
+    <script type="text/javascript" src="~/lib/jquery-cookie/jquery.cookie.js"></script>
+    <script type="text/javascript" src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            jQuery('#currentUser option[value=' + $.cookie("CurrentUser") + ']').prop('selected', true);
+            jQuery('#editForm').validate({
+                rules: {
+                    title: {
+                        required: true
+                    },
+                    description: {
+                        required: true
+                    },
+                    creator: {
+                        required: true
+                    },
+                    contractor: {
+                        required: true
+                    },
+                },
+                errorPlacement: function (error, element) { },
+                highlight: function (element) {
+                    $(element).css('background', '#ffdddd');
+                },
+
+                unhighlight: function (element) {
+                    $(element).css('background', '#ffffff');
+                }
+            });
+        });
+    </script>
+}
+
+<div class="row">
+    <div class="col col-lg-12"><a href="/">Home</a>&nbsp;|&nbsp;<a href="/Users">Пользователи</a></div>
+</div>
+<form method="post" action="/Task/Update" id="editForm">
+    <div class="row">
+        <div class="col-lg-2">Задача №@Model.Task.ID</div>
+        <input class="col-lg-10" name="title" placeholder="Заголовок задачи" value="@Model.Task.Title" />
+        <input type="hidden" name="id" value="@Model.Task.ID" />
+    </div>
+    <div class="row form-group">
+        <fieldset class="form-group row">
+            <legend class="the-legend">Описание задачи</legend>
+            <div class="row form-group">
+                <div class="col-lg-8">
+                    <select id="currentUser" name="creator" asp-items="@(new SelectList(Model.AllUsers, "ID", "FirstName"))"></select>
+                    <select name="contractor">
+                        <option value="" disabled selected></option>
+                        @foreach (var u in Model.AllUsers)
+                        {
+                            if (!u.IsActual)
+                            {
+                                <option value="@u.ID" disabled>@u.FirstName</option>
+                            }
+                            else
+                            {
+                                <option value="@u.ID">@u.FirstName</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-lg-2">
+                    Дата создания:
+                </div>
+                <div class="col-lg-2">
+                    @Model.Task.CreateDate.ToString()
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-lg-12">
+                    <textarea class="form-control" rows="10" name="description" placeholder="Описание задачи">@Model.Task.Description</textarea>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-lg-8"></div>
+                <div class="col-lg-2">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+                <div class="col-lg-2">
+                    <a href="/Task/Remove/@Model.Task.ID" class="btn btn-danger" onclick="return confirm('Вы хотите удалить задачу и все связанные с ней комментарии?');">Удалить</a>
+                </div>
+            </div>
+        </fieldset>
+
+    </div>
+</form>
+<div class="row form-group">
+    @for (int i = 0; i < Model.Task.TaskComments.Count; i++)
+    {
+        <fieldset class="form-group row">
+            <legend class="the-legend">Комментарий @(i + 1)</legend>
+            <div class="row form-group">
+                <div class="col col-lg-2">
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                    <span>@Model.Task.TaskComments.ToArray()[i].Creator?.FirstName</span>
+                </div>
+                <div class="col-lg-10">
+                    <textarea class="form-control" disabled rows="3" id="comment">@Model.Task.TaskComments.ToArray()[i].Description</textarea>
+                </div>
+
+            </div>
+            <div class="row form-group">
+                <div class="col col-lg-10"></div>
+                <div class="col-lg-2">
+                    <a href="/Comment/Remove/@Model.Task.TaskComments.ToArray()[i].ID" class="btn btn-danger" onclick="return confirm('Вы хотите удалить комментарий?');">Удалить</a>
+                </div>
+            </div>
+        </fieldset>
+
+    }
+    <form method="post" action="/Comment/AddComment">
+        <input type="hidden" name="taskIdStr" value="@Model.Task.ID" />
+        <fieldset class="form-group row">
+            <legend class="the-legend">Новый комментарий</legend>
+            <div class="row form-group">
+                <div class="col-lg-12">
+                    <textarea class="form-control" name="commentText" rows="3" id="comment" placeholder="Введите текст комментария"></textarea>
+                </div>
+            </div>
+            <div class="row form-group">
+                <div class="col-lg-10"></div>
+                <div class="col-lg-2">
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
+

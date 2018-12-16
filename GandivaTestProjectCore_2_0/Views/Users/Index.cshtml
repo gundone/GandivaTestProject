@@ -1,0 +1,63 @@
+﻿@using GandivaTestProject.Helpers
+@model GandivaTestProject.Models.UsersListViewModel
+@{
+    ViewData["Title"] = "Users: Gandiva Test Project - Sizov Ivan";
+}
+<div class="container-fluid mt-1">
+    <div class="row">
+        <div class="col col-lg-10"><a href="/">Home</a>&nbsp;|&nbsp;<a href="/Task/NewTask">Создать новую задачу</a> </div>
+        <div class="col col-lg-2">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Фамилия</th>
+                <th>Имя</th>
+                <th>Отчество</th>
+                <th colspan="2"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var u in Model.Users)
+            {
+                if (!u.IsActual)
+                {
+                    continue;
+                }
+                <tr>
+                    <td><form class="userEditForm" id="userForm_@u.ID" action="/Users/Update/@u.ID" method="post"></form>@u.ID</td>
+                    <td><input class="form-control no-border" type="text" name="surname" form="userForm_@u.ID" value="@u.Surname" /></td>
+                    <td><input class="form-control no-border" type="text" name="firstname" form="userForm_@u.ID" value="@u.FirstName" /></td>
+                    <td><input class="form-control no-border" type="text" name="secondaryname" form="userForm_@u.ID" value="@u.SecondaryName" /></td>
+                    <td>
+                        <button type="submit" form="userForm_@u.ID" class="btn btn-default">Сохранить</button>
+                    </td>
+                    <td>
+                        <a href="/Users/Remove/@u.ID" class="btn btn-danger" onclick="return confirm('Вы хотите удалить пользователя?');">Удалить</a>
+                    </td>
+
+                </tr>
+            }
+            <tr>
+                <td><form  class="userEditForm" id="newUser" action="/Users/Create" method="post"></form></td>
+                <td><input class="form-control no-border" type="text" name="surname" form="newUser" value="" /></td>
+                <td><input class="form-control no-border" type="text" name="firstname" form="newUser" value="" /></td>
+                <td><input class="form-control no-border" type="text" name="secondaryname" form="newUser" value="" /></td>
+                <td colspan="2">
+                    <button type="submit" form="newUser" class="btn btn-default">Создать</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="row ">
+    <div class="col-md-2 col-md-offset-5">
+        <div class="btn-group">
+            @Html.PageLinks(Model.PageViewModel, x => Url.Action("Index", new { page = x }))
+        </div>
+    </div>
+</div>

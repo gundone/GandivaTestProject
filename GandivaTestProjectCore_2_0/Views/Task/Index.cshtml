@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "Tasks: Gandiva Test Project - Sizov Ivan";
+}
+@model GandivaTestProject.Models.TaskListViewModel
+@using GandivaTestProject.Helpers
+@section scripts
+{
+    <script type="text/javascript" src="~/lib/jquery-cookie/jquery.cookie.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function () {
+            if (!jQuery('#currentUser option[value=' + $.cookie("CurrentUser") + ']').prop('disabled'))
+                jQuery('#currentUser option[value=' + $.cookie("CurrentUser") + ']').prop('selected', true);
+            else
+                jQuery('#currentUser option[value=""]').prop('selected', true);
+            jQuery('#currentUser').change(function () {
+                jQuery.post("/Users/SetCurrent/", { id: jQuery('#currentUser').val() });
+            });
+
+        });
+    </script>
+}
+
+<div class="container-fluid  mt-1">
+    <div class="row">
+        <div class="col col-lg-10"><a href="/Task/NewTask">Создать новую задачу</a>&nbsp;|&nbsp;<a href="/Users">Пользователи</a></div>
+        <div class="col col-lg-2">
+            <select id="currentUser">
+                @foreach (var u in Model.Users)
+                {
+                    if (!u.IsActual)
+                    {
+                        <option value="@u.ID" disabled>@u.FirstName</option>
+                    }
+                    else
+                    {
+                        <option value="@u.ID">@u.FirstName</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>№</th>
+            <th>Заголовок</th>
+            <th>Создатель</th>
+            <th>Исполнитель</th>
+            <th>Дата создания</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            foreach (var t in Model.Tasks)
+            {
+                <tr>
+                    <td>@t.ID</td>
+                    <td>@t.Title</td>
+                    <td>@t.Creator.FirstName</td>
+                    <td>@t.Contractor?.FirstName</td>
+                    <td>@t.CreateDate</td>
+                    <td>@Html.ActionLink("Правка", "Edit", new { id = t.ID })</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+<div class="row ">
+    <div class="col-md-2 col-md-offset-5">
+        <div class="btn-group">
+            @Html.PageLinks(Model.PageViewModel, x => Url.Action("Index", new { page = x }))
+        </div>
+    </div>
+</div>

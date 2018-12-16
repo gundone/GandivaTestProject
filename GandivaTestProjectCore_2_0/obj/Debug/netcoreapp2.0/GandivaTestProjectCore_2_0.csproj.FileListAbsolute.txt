@@ -1,0 +1,11 @@
+E:\Projects\GandivaTestProjectCore_2_0\GandivaTestProjectCore_2_0\bin\Debug\netcoreapp2.0\GandivaTestProjectCore_2_0.deps.json
+E:\Projects\GandivaTestProjectCore_2_0\GandivaTestProjectCore_2_0\bin\Debug\netcoreapp2.0\GandivaTestProjectCore_2_0.runtimeconfig.json
+E:\Projects\GandivaTestProjectCore_2_0\GandivaTestProjectCore_2_0\bin\Debug\netcoreapp2.0\GandivaTestProjectCore_2_0.runtimeconfig.dev.json
+E:\Projects\GandivaTestProjectCore_2_0\GandivaTestProjectCore_2_0\bin\Debug\netcoreapp2.0\GandivaTestProjectCore_2_0.dll
+E:\Projects\GandivaTestProjectCore_2_0\GandivaTestProjectCore_2_0\bin\Debug\netcoreapp2.0\GandivaTestProjectCore_2_0.pdb
+E:\Projects\GandivaTestProjectCore_2_0\GandivaTestProjectCore_2_0\obj\Debug\netcoreapp2.0\GandivaTestProjectCore_2_0.csprojAssemblyReference.cache
+E:\Projects\GandivaTestProjectCore_2_0\GandivaTestProjectCore_2_0\obj\Debug\netcoreapp2.0\GandivaTestProjectCore_2_0.csproj.CoreCompileInputs.cache
+E:\Projects\GandivaTestProjectCore_2_0\GandivaTestProjectCore_2_0\obj\Debug\netcoreapp2.0\GandivaTestProjectCore_2_0.AssemblyInfoInputs.cache
+E:\Projects\GandivaTestProjectCore_2_0\GandivaTestProjectCore_2_0\obj\Debug\netcoreapp2.0\GandivaTestProjectCore_2_0.AssemblyInfo.cs
+E:\Projects\GandivaTestProjectCore_2_0\GandivaTestProjectCore_2_0\obj\Debug\netcoreapp2.0\GandivaTestProjectCore_2_0.dll
+E:\Projects\GandivaTestProjectCore_2_0\GandivaTestProjectCore_2_0\obj\Debug\netcoreapp2.0\GandivaTestProjectCore_2_0.pdb
